@@ -1,6 +1,6 @@
 
 ```markdown
-![SortViz Screenshot](./screenshot.png)
+![SortViz Screenshot](./SortViz.png)
 ```
 
 ## **Overview**
