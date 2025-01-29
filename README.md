@@ -1,7 +1,5 @@
 
-```markdown
-![SortViz Screenshot](./SortViz.png)
-```
+![DevDetective Project](./SortViz.png)
 
 ## **Overview**
 
