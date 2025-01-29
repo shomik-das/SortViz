@@ -1,4 +1,3 @@
-# **SortViz**
 
 ```markdown
 ![SortViz Screenshot](./screenshot.png)
@@ -9,7 +8,6 @@
 SortViz is an interactive sorting algorithm visualizer built using React.js. It provides a clear and intuitive way to understand sorting algorithms through real-time visual updates.
 
 ## **Features**
----
 ### **Supported Sorting Algorithms**
 - **Bubble Sort**
 - **Selection Sort**
@@ -25,7 +23,6 @@ SortViz is an interactive sorting algorithm visualizer built using React.js. It 
   - **Sorted Positions** (sorted elements are marked distinctly)
 - Adjustable array size and speed controls.
 - Responsive design for different screen sizes.
----
 
 ## **Technology Stack**
 - **Frontend**: React.js, CSS
@@ -53,5 +50,3 @@ SortViz is an interactive sorting algorithm visualizer built using React.js. It 
 - Enhancing React.js skills by managing state and rendering updates efficiently.
 - Improving problem-solving skills through algorithm visualization.
 - Developing an interactive UI with dynamic updates.
-
----
