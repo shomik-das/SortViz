@@ -29,7 +29,7 @@ SortViz is an interactive sorting algorithm visualizer built using React.js. It 
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/yourusername/SortViz.git
+   git clone https://github.com/shomik-das/SortViz.git
    cd SortViz
    ```
 
