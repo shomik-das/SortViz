@@ -1,6 +1,6 @@
 import NavBar from "./components/NavBar";
 import Bars from "./components/Bars.jsx";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import './App.css'
 
 import bubbleSort from "./algorithms/bubbleSort";
@@ -14,13 +14,16 @@ const App = () => {
   const [algo, setAlgo] = useState("bubbleSort");
   const [len, setLength] = useState(20);
   const [blocks, setBlocks] = useState([]);
-  const [sorting, setSorting] = useState(false); //track whether sorting is in progress.
-  const [completed, setCompleted] = useState(true); //track if sorting is completed.
+  const [sorting, setSorting] = useState(false);
+  const [completed, setCompleted] = useState(true);
   const [speed, setSpeed] = useState(250);
   const [compare, setCompare] = useState([]);
   const [swap, setSwap] = useState([]);
-  const [sortedIndex, setSortedIndex] = useState([]); //Tracks indices of elements that are sorted.
-
+  const [sortedIndex, setSortedIndex] = useState([]);
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef(null);
+  const sortingStepsRef = useRef([]);
+  const currentStepRef = useRef(0);
 
   // generating shuffled array of 1 to n or 1 to len
   // const generateRandomArray = (len) => {
@@ -80,71 +83,133 @@ const App = () => {
       setSpeed(Math.ceil(500 / Number(event.target.value)));
   }
 
-  // Sorting according to the algorithm
+  const handlePause = () => {
+    setIsPaused(true);
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+  };
+
+  const handlePlay = () => {
+    if (!sorting) return;
+    setIsPaused(false);
+    processSortingSteps();
+  };
+
+  const processSortingSteps = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
+
+    intervalRef.current = setInterval(() => {
+      if (currentStepRef.current >= sortingStepsRef.current.length) {
+        clearInterval(intervalRef.current);
+        setSorting(false);
+        setCompleted(true);
+        return;
+      }
+
+      const [j, k, arr, index] = sortingStepsRef.current[currentStepRef.current];
+      setCompare([j, k]);
+      setSwap([]);
+
+      if (index !== null) {
+        setSortedIndex((prevState) => [...prevState, index]);
+      }
+
+      if (arr) {
+        setBlocks(arr);
+        if (j !== null || k != null) setSwap([j, k]);
+      }
+
+      currentStepRef.current++;
+    }, speed);
+  };
+
   const handleSort = () => {
+    setSorting(true);
+    setIsPaused(false);
+    currentStepRef.current = 0;
+    
+    switch (algo) {
+      case "bubbleSort":
+        sortingStepsRef.current = bubbleSort(blocks);
+        break;
+      case "selectionSort":
+        sortingStepsRef.current = selectionSort(blocks);
+        break;
+      case "insertionSort":
+        sortingStepsRef.current = insertionSort(blocks);
+        break;
+      case "quickSort":
+        sortingStepsRef.current = quickSort(blocks);
+        break;
+      case "mergeSort":
+        sortingStepsRef.current = mergeSort(blocks);
+        break;
+      default:
+        setSorting(false);
+        setCompleted(true);
+        return;
+    }
 
-      const sortAccOrder = (order) => {
-          let i = 0;
-          let myInterval = setInterval(() => {
-              const [j, k, arr, index] = order[i]
-              setCompare([j, k])
-              setSwap([])
+    processSortingSteps();
+  };
 
-              if (index !== null) {
-                  setSortedIndex((prevState) => [...prevState, index])
-              }
+  const handleFinish = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+    }
 
-              if (arr) {
-                  setBlocks(arr)
-                  if (j !== null || k != null) setSwap([j, k])
-              }
-
-              if (++i >= order.length) {
-                  setSorting(false)
-                  setCompleted(true)
-                  clearInterval(myInterval);
-              }
-          }, speed)
+    // Process all remaining steps instantly
+    while (currentStepRef.current < sortingStepsRef.current.length) {
+      const [j, k, arr, index] = sortingStepsRef.current[currentStepRef.current];
+      
+      if (index !== null) {
+        setSortedIndex(prevState => [...prevState, index]);
       }
 
-      setSorting(true)
-
-      switch (algo) {
-          case "bubbleSort": return sortAccOrder(bubbleSort(blocks));
-          case "selectionSort": return sortAccOrder(selectionSort(blocks));
-          case "insertionSort": return sortAccOrder(insertionSort(blocks));
-          case "quickSort": return sortAccOrder(quickSort(blocks));
-          case "mergeSort": return sortAccOrder(mergeSort(blocks));
-          default: return () => {
-              setSorting(false)
-              setCompleted(true)
-          }
+      if (arr) {
+        setBlocks(arr);
       }
-  }
 
+      currentStepRef.current++;
+    }
+
+    // Set final state
+    setCompare([]);
+    setSwap([]);
+    setSorting(false);
+    setCompleted(true);
+    setIsPaused(false);
+  };
 
   return (
-      <div className="App">
-          <NavBar
-              generateRandomArray={() => generateRandomArray(len)}
-              handleLength={handleLength}
-              handleSpeed={handleSpeed}
-              handleAlgo={handleAlgo}
-              handleSort={handleSort}
-              sorting={sorting}
-              completed={completed}
-              len={len}
-              speed={speed}
-              algo={algo}
-          />
-          <Bars
-                blocks={blocks}
-                compare={sorting && compare}
-                swap={sorting && swap}
-                sorted={sortedIndex}
-          />
-      </div>
-  )
-}
+    <div className="App">
+      <NavBar
+        generateRandomArray={() => generateRandomArray(len)}
+        handleLength={handleLength}
+        handleSpeed={handleSpeed}
+        handleAlgo={handleAlgo}
+        handleSort={handleSort}
+        handlePause={handlePause}
+        handlePlay={handlePlay}
+        handleFinish={handleFinish}
+        sorting={sorting}
+        completed={completed}
+        isPaused={isPaused}
+        len={len}
+        speed={speed}
+        algo={algo}
+      />
+      <Bars
+        blocks={blocks}
+        compare={sorting && compare}
+        swap={sorting && swap}
+        sorted={sortedIndex}
+      />
+    </div>
+  );
+};
 
 export default App;

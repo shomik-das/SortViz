@@ -1,23 +1,38 @@
 .listBlocks {
-    background-color: #2929406c;
+    background-color: #2c3e50;
     margin: 0 auto;
-    min-height: 610px;
+    min-height: 550px;
     min-width: 90%;
     text-align: center;
     display: flex;
     align-items: flex-end;
     justify-content: center;
-  }
+    padding: 20px 20px 45px 20px;
+    gap: 4px;
+}
   
-  .listBlocks > .block {
-    background-color: turquoise;
-    color: #282c34;
-    border-radius: 5px;
-    font-size: 10px;
+.listBlocks > .block {
+    background-color: #3498db;
+    color: white;
+    border-radius: 3px 3px 0 0;
+    font-size: 12px;
     font-weight: bold;
-    margin: 0 2px;
     text-align: center;
-    transition-duration: 10ms;
-    transition-property: height;
-    transition-timing-function: ease-in;
-  }
+    transition: all 0.2s ease;
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding-bottom: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.listBlocks > .block::after {
+    content: attr(data-value);
+    position: absolute;
+    bottom: -25px;
+    color: #ecf0f1;
+    font-size: 12px;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}

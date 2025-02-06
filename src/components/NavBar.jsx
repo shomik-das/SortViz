@@ -7,20 +7,21 @@ const NavBar = ({
     handleAlgo,
     generateRandomArray,
     handleSort,
+    handlePause,
+    handlePlay,
+    handleFinish,
     sorting,
     completed,
+    isPaused,
     len,
     speed,
     algo,
-    handlePause,
-    handlePlay,
-    handleRestart
   }) => {
 
     return (
         <nav>
             <div className="nav-brand">
-                Sorting Visualizer
+                SortViz
             </div>
 
             <div className="toolbox">
@@ -31,7 +32,7 @@ const NavBar = ({
                             type="range"
                             onChange={handleSpeed}
                             min="1"
-                            max="10"
+                            max="5"
                             value={Math.ceil(500 / speed)}
                             disabled={sorting}
                         ></input>
@@ -66,6 +67,22 @@ const NavBar = ({
                     <button onClick={handleSort} disabled={sorting || completed}>
                         Sort
                     </button>
+                    {sorting && !completed && (
+                        <>
+                            {!isPaused ? (
+                                <button onClick={handlePause}>
+                                    Pause
+                                </button>
+                            ) : (
+                                <button onClick={handlePlay}>
+                                    Play
+                                </button>
+                            )}
+                            <button onClick={handleFinish}>
+                                Finish
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
         </nav>
