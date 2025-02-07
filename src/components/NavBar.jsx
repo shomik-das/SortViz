@@ -32,8 +32,8 @@ const NavBar = ({
                             type="range"
                             onChange={handleSpeed}
                             min="1"
-                            max="5"
-                            value={Math.ceil(500 / speed)}
+                            max="10"
+                            value={Math.ceil(1000 / speed)}
                             disabled={sorting}
                         ></input>
                     </div>
@@ -57,6 +57,7 @@ const NavBar = ({
                         <option value="insertionSort">Insertion Sort</option>
                         <option value="mergeSort">Merge Sort</option>
                         <option value="quickSort">Quick Sort</option>
+                        <option value="heapSort">Heap Sort</option>
                     </select>
                 </div>
 

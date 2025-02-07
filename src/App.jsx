@@ -8,6 +8,7 @@ import insertionSort from "./algorithms/insertionSort";
 import selectionSort from "./algorithms/selectionSort";
 import quickSort from "./algorithms/quickSort";
 import mergeSort from "./algorithms/mergeSort";
+import heapSort from "./algorithms/heapSort";
 
 const App = () => {
   //states
@@ -80,7 +81,7 @@ const App = () => {
 
   // handling the speed of sorting
   const handleSpeed = (event) => {
-      setSpeed(Math.ceil(500 / Number(event.target.value)));
+      setSpeed(Math.ceil(1000 / Number(event.target.value)));
   }
 
   const handlePause = () => {
@@ -146,6 +147,9 @@ const App = () => {
         break;
       case "mergeSort":
         sortingStepsRef.current = mergeSort(blocks);
+        break;
+      case "heapSort":
+        sortingStepsRef.current = heapSort(blocks);
         break;
       default:
         setSorting(false);
