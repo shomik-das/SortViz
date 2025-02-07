@@ -1,5 +1,5 @@
 
-![DevDetective Project](./SortViz.png)
+![DevDetective Project](./Screenshot 2025-02-07 113615.png)
 
 ## **Overview**
 
