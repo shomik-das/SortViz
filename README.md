@@ -1,5 +1,5 @@
 
-![DevDetective Project](./Screenshot.png)
+![DevDetective Project](./ScreenshotSortViz.png)
 
 ## **Overview**
 
