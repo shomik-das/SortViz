@@ -44,13 +44,11 @@ const ListBlocks = ({ blocks, compare, sorted, swap }) => {
                     height: height,
                     width: width,
                 }
-
                 return (
                     <div 
                         key={i} 
                         className="block" 
                         style={style}
-                        data-value={block}
                     >
                         {block}
                     </div>
